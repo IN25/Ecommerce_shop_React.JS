@@ -6,9 +6,6 @@ export const CollectionItem = ({ name, imageUrl, price }) => {
     <>
       <div className="item">
         <img src={imageUrl} alt="" />
-
-        {/* <button className="btn">Add To Cart</button> */}
-
         <div className="product_info">
           <span>{name}</span>
           <span>{`\$${price}`}</span>
