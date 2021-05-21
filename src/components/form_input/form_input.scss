@@ -1,0 +1,58 @@
+//saas variables
+$sub-color: grey;
+$main-color: black;
+
+//reusable piece of css, you include it by using @include shrinkLabel();
+@mixin shrinkLabel {
+  top: 5px;
+  font-size: 15px;
+  color: $main-color;
+}
+
+body {
+  margin-left: 2rem;
+}
+
+.group {
+  position: relative;
+
+  input {
+      width: 30vw;
+  }
+
+  .form_input {
+    background: none;
+    color: $sub-color;
+    font-size: 18px;
+    padding: 0.6rem 0rem;
+    border: none;
+    border-bottom: 1px solid $sub-color;
+    margin: 25px 0;
+
+    &:focus {
+      outline: none;
+    }
+
+    //whenever user focuses on .form_input_label class, we include shrinkLabel
+    &:focus ~ .form_input_label {
+      @include shrinkLabel();
+    }
+  }
+
+  input[type="password"] {
+    letter-spacing: 0.3em;
+  }
+
+  .form_input_label {
+    color: $sub-color;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 40px;
+    transition: 300ms ease all;
+
+    &.shrink {
+      @include shrinkLabel();
+    }
+  }
+}

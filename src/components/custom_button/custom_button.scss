@@ -1,0 +1,15 @@
+.custom_button {
+    padding: 1rem 3.5rem;
+    background: #000;
+    color: white;
+    border: none;
+    margin-top: 1rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+
+    &:hover {
+        background: white;
+        color: black;
+        border: 1px solid black;
+    }
+}
