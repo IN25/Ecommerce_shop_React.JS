@@ -1,15 +1,27 @@
 .custom_button {
-    padding: 1rem 3.5rem;
-    background: #000;
+  width: 180px;
+  height: 55px;
+  background: #000;
+  color: white;
+  border: none;
+  margin-top: 1rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+
+  &:hover {
+    background: white;
+    color: black;
+    border: 1px solid black;
+  }
+
+  //if there is google_sign_in class with custom_button
+  &.google_sign_in {
+    background: #4285f4;
     color: white;
-    border: none;
-    margin-top: 1rem;
-    letter-spacing: 0.5px;
-    cursor: pointer;
 
     &:hover {
-        background: white;
-        color: black;
-        border: 1px solid black;
+      background: #357ae8;
+      border: none;
     }
+  }
 }

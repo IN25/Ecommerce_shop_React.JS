@@ -1,6 +1,6 @@
 .sign_in {
   margin: 2rem 2rem;
-  width: 30vw;
+  width: 380px;
 
   span {
     font-size: 1.1rem;
@@ -8,6 +8,11 @@
 
   .title {
     margin: 2rem 0;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
   }
 }
 
