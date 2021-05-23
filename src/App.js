@@ -5,7 +5,9 @@ import ShopPage from "./pages/shop_page/shop.component";
 import { Route, Switch } from "react-router-dom";
 import { Header } from "./components/header/header.component";
 import { SignInAndSignUpPage } from "./pages/sign_in_and_sign_up_page/sign_in_and_sign_up_page.component";
-import { auth } from "./firebase/firebase.utils";
+
+//we add auth to our application so that we can use it to let our application know that someone is authenticated using google
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 class App extends React.Component {
   constructor(props) {
@@ -16,17 +18,19 @@ class App extends React.Component {
     };
   }
 
-  unsubscribeFromAll = null;
+  //new method
+  unsubscribeFromAuth = null;
 
-  //when application is mounted
+  //this runs after the application is mounted(rendered)
   componentDidMount() {
-    //this is an open subscription - Whenever a user signed in or signed out, the onAuthStateChanged method will give us a user, which we will add to our state
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
+    //this is an open subscription - Whenever a user signed in or signed out, the onAuthStateChanged method will give us a user, which we will add to our this.state/to our database
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
+      this.setState({ currentUser: user }); //adding a user object to the state for conditional rendering
+      createUserProfileDocument(user); //adding a user to Firestore database
     });
   }
 
-  //to prevent memory leak, we call unsubscribeFromAuth() to close the subscription
+  //to prevent memory leak, we call unsubscribeFromAuth() to close the subscription when our application unmounts
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }
