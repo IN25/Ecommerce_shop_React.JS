@@ -25,7 +25,10 @@ export const Header = ({ currentUser }) => {
 
         {/* passing "curentUser" form App.js to let the header know whether the user signed in or not for condiitonal rendering */}
         {currentUser ? (
-          <Link onClick={() => auth.signOut()}>SIGN OUT</Link> // auth.signOut() signs out a user from firebase
+          // auth.signOut() signs out a user from firebase
+          <Link onClick={() => auth.signOut()} to="">
+            SIGN OUT
+          </Link>
         ) : (
           <Link className="option" to="/signin">
             SIGN IN

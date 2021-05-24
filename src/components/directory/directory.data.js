@@ -23,7 +23,6 @@ export const data = [
     size: "large",
     id: 4,
     linkUrl: "shop/womens",
-    size: "large",
   },
   {
     title: "mens",
@@ -31,6 +30,5 @@ export const data = [
     size: "large",
     id: 5,
     linkUrl: "shop/mens",
-    size: "large",
   },
 ];

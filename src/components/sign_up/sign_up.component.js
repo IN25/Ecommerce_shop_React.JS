@@ -16,10 +16,17 @@ class SignUp extends React.Component {
     };
   }
 
+  handleChange = (event) => {
+    const { value, name } = event.target;
+    this.setState({ [name]: value });
+  };
+
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (this.password !== this.confirmPassword) {
+    const { displayName, email, password, confirmPassword } = this.state;
+
+    if (password !== confirmPassword) {
       alert("passwords don't match");
       return;
     }
@@ -30,11 +37,10 @@ class SignUp extends React.Component {
       // On successful creation of the user account, this user will also be signed in to your application.
       // User account creation can fail if the account already exists or the password is invalid.
       const { user } = await auth.createUserWithEmailAndPassword(
-        this.email,
-        this.password
+        email,
+        password
       );
 
-      const { displayName } = this.state;
       await createUserProfileDocument(user, { displayName });
 
       this.setState({
@@ -46,11 +52,6 @@ class SignUp extends React.Component {
     } catch (error) {
       console.error(error);
     }
-  };
-
-  handleChange = (event) => {
-    const { value, name } = event.target;
-    this.setState({ [name]: value });
   };
 
   render() {

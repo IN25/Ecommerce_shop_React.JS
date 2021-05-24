@@ -8,7 +8,7 @@ export const CollectionItem = ({ name, imageUrl, price }) => {
         <img src={imageUrl} alt="" />
         <div className="product_info">
           <span>{name}</span>
-          <span>{`\$${price}`}</span>
+          <span>{`${price}`}</span>
         </div>
       </div>
     </>
