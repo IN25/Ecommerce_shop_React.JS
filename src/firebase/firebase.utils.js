@@ -28,9 +28,9 @@ export default firebase;
 
 //this function allows us to take an object of the authenticated user that we get from the auth library and store its' properties inside the Firestore databa se
 //user is the object of the authenticated user that we get from the auth library
-export const createUserProfileDocument = async (user, additionalData) => {
+export const createUserProfileDocument = async (userAuth, additionalData) => {
   //if a user is not authenticated, return form this function
-  if (!user) return;
+  if (!userAuth) return;
 
   // Firestore library gives us back one of two objects - QueryReference or QuerySnapshot.
 
@@ -51,14 +51,14 @@ export const createUserProfileDocument = async (user, additionalData) => {
 
   // We get the snapshotObject from the referenceObject using the .get()
   // method. ie. documentRef.get() or collectionRef.get()
-  const userRef = firestore.doc(`users/${user.uid}`); //QueryReference for the current user
+  const userRef = firestore.doc(`users/${userAuth.uid}`); //QueryReference for the current user
   //in the snapShot object, there is property exists, which tells us whether or not we already stored a user in the Firestore database
   const snapShot = await userRef.get(); //snapshotObject
 
   //if a user does not exist in our database, we are going to create a piece of data, and in order to create, we are going to use DocumentRef methods
   if (!snapShot.exists) {
     //properties to store
-    const { displayName, email } = user;
+    const { displayName, email } = userAuth;
     const createdAt = new Date(); //a property to store the time when we made the document
 
     try {

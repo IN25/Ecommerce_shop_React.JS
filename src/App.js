@@ -24,9 +24,33 @@ class App extends React.Component {
   //this runs after the application is mounted(rendered)
   componentDidMount() {
     //this is an open subscription - Whenever a user signed in or signed out, the onAuthStateChanged method will give us a user, which we will add to our this.state/to our database
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
-      this.setState({ currentUser: user }); //adding a user object to the state for conditional rendering
-      createUserProfileDocument(user); //adding a user to Firestore database
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      this.setState({ currentUser: userAuth }); //adding a user object to the state for conditional rendering
+
+      //Storing the user data in the "state" of the application so that we can use it in our app.
+      //if userAuth is a true value (exists)
+      if (userAuth) {
+        createUserProfileDocument(userAuth); //adding a user to Firestore database
+        //createUserProfileDocument returns userRef, and we will use userRef below
+        const userRef = await createUserProfileDocument(userAuth);
+
+        //we use onSnapshot to check if our database had updated with any new data
+
+        // We get a documentSnapshot object from our documentReference object.
+        // The documentSnapshot object allows us to check if a document exists at this query using the .exists property which returns a boolean.
+        // We can also get the actual data of a user on the object by calling the .data() method, which returns us a JSON object with user data.
+        userRef.onSnapshot((snapShot) => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data(), //spreading the data of a user
+            },
+          });
+        });
+      } else {
+        //if a userAuth object does not exist, we set the state to null
+        this.setState({ currentUser: null });
+      }
     });
   }
 
