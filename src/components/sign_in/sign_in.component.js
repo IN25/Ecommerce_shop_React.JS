@@ -1,6 +1,6 @@
 import React from "react";
 import "./sign_in.scss";
-import FormInput from "../../components/form_input/form_input.component";
+import { FormInput } from "../../components/form_input/form_input.component";
 import { CustomButton } from "../../components/custom_button/custom_button.component";
 import { signInWithGoogle } from "../../firebase/firebase.utils";
 
@@ -25,6 +25,8 @@ class SignIn extends React.Component {
     this.setState({ [name]: value });
   };
 
+
+
   render() {
     return (
       <div className="sign_in">
@@ -35,8 +37,8 @@ class SignIn extends React.Component {
           <FormInput
             name="email"
             type="email"
-            value={this.state.email}
             handleChange={this.handleChange}
+            value={this.state.email}
             label="Email"
             required
           />
@@ -44,8 +46,8 @@ class SignIn extends React.Component {
           <FormInput
             name="password"
             type="password"
-            value={this.state.password}
             handleChange={this.handleChange}
+            value={this.state.password}
             label="Password"
             required
           />
