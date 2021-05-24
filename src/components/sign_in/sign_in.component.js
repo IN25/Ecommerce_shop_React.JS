@@ -2,7 +2,7 @@ import React from "react";
 import "./sign_in.scss";
 import { FormInput } from "../../components/form_input/form_input.component";
 import { CustomButton } from "../../components/custom_button/custom_button.component";
-import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
+import { auth, signInWithGoogle } from "../../assets/firebase/firebase.utils";
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -64,6 +64,8 @@ class SignIn extends React.Component {
             </CustomButton>
 
             <CustomButton
+              //because this CustomButton is inside the form tag, this button's type is set as submit by default, changin it for button will not longer warn to fill the form
+              type="button"
               value="SIGN IN WITH GOOGLE"
               onClick={signInWithGoogle}
               isGoogleSignIn

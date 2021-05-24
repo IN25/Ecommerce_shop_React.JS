@@ -7,7 +7,7 @@ import { Header } from "./components/header/header.component";
 import { SignInAndSignUpPage } from "./pages/sign_in_and_sign_up_page/sign_in_and_sign_up_page.component";
 
 //we add auth to our application so that we can use it to let our application know that someone is authenticated using google
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./assets/firebase/firebase.utils";
 
 class App extends React.Component {
   constructor(props) {
