@@ -16,19 +16,10 @@ const config = {
 };
 firebase.initializeApp(config);
 
-//configurations for google authentication
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
-
-const provider = new firebase.auth.GoogleAuthProvider();
-// provider.setCustomParameters({ prompt: "select_account" }); //this sets google popup for authentication
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
-
-export default firebase;
-
 //this function allows us to take an object of the authenticated user that we get from the auth library and store its' properties inside the Firestore databa se
 //user is the object of the authenticated user that we get from the auth library
 export const createUserProfileDocument = async (userAuth, additionalData) => {
+
   //if a user is not authenticated, return form this function
   if (!userAuth) return;
 
@@ -77,3 +68,13 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   //we might want userRef object to use it for something else
   return userRef;
 };
+
+//configurations for google authentication
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+
+const provider = new firebase.auth.GoogleAuthProvider();
+provider.setCustomParameters({ prompt: "select_account" }); //this sets google popup for authentication
+export const signInWithGoogle = () => auth.signInWithPopup(provider);
+
+export default firebase;

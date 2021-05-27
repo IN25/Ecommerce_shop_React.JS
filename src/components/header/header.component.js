@@ -25,7 +25,7 @@ const Header = ({ currentUser }) => {
         {/* passing "curentUser" form App.js to let the header know whether the user signed in or not for condiitonal rendering */}
         {currentUser ? (
           // auth.signOut() signs out a user from firebase
-          <Link onClick={() => auth.signOut()} to="">
+          <Link className="option" onClick={() => auth.signOut()} to="">
             SIGN OUT
           </Link>
         ) : (
@@ -38,9 +38,11 @@ const Header = ({ currentUser }) => {
   );
 };
 
+// getting current user from the redux
+//we want to pass currentUser to Header from userReducer
 const mapStateToProps = (state) => {
+  //currentUser is the value we want to pass as props and state.user.currentUser is the state value from root_reducer
   return { currentUser: state.user.currentUser };
 };
-
-//connect is a higher-order component, that lets us modify a component by taking a component as an argument and returning a new one
+//by using connect(mapStateToProps), then mapStateToProps get access to the root_reducer, where all states are stored. Then we access user.currentUser state
 export default connect(mapStateToProps)(Header);

@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { HomePage } from "./pages/home_page/homepage.component";
 import ShopPage from "./pages/shop_page/shop.component";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Header from "./components/header/header.component";
 import { SignInAndSignUpPage } from "./pages/sign_in_and_sign_up_page/sign_in_and_sign_up_page.component";
 import { connect } from "react-redux";
@@ -24,12 +24,9 @@ class App extends React.Component {
 
     //this is an open subscription - Whenever a user signed in or signed out, the onAuthStateChanged method will give us a user, which we will add to our this.state/to our database
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      this.setState({ currentUser: userAuth }); //adding a user object to the state for conditional rendering
-
       //Storing the user data in the "state" of the application so that we can use it in our app.
       //if userAuth is a true value (exists)
       if (userAuth) {
-        createUserProfileDocument(userAuth); //adding a user to Firestore database
         //createUserProfileDocument returns userRef, and we will use userRef below
         const userRef = await createUserProfileDocument(userAuth);
 
@@ -46,7 +43,7 @@ class App extends React.Component {
         });
       } else {
         //if a userAuth object does not exist, we set the state to null
-        setCurrentUser({ userAuth });
+        setCurrentUser(userAuth);
       }
     });
   }
@@ -60,13 +57,25 @@ class App extends React.Component {
     return (
       <div className="App">
         {/* passing currentUser to conditionally render the sign out button */}
-        <Header></Header>
+        <Header />
 
         {/* Switch component is imported from the react-router-component, it only renders the first path that it encounters in our code, it is useful to prevent multiple renders if there are components with the same path */}
         <Switch>
           {/* Route component is imported from the react-router-dom, it allows us to render components based on a url path */}
           <Route exact path="/" component={HomePage}></Route>
           <Route path="/shop" component={ShopPage}></Route>
+          {/* this will redirect a user to the homepage if he is signed in */}
+          <Route
+            exact
+            path="/signin"
+            render={() =>
+              this.props.currentUser ? (
+                <Redirect to="/" />
+              ) : (
+                <SignInAndSignUpPage />
+              )
+            }
+          />
           <Route path="/signin" component={SignInAndSignUpPage}></Route>
         </Switch>
       </div>
@@ -74,6 +83,12 @@ class App extends React.Component {
   }
 }
 
+//passing currentUser into the App props
+const mapStateToProps = (state) => {
+  return { currentUser: state.user.currentUser };
+};
+
+//sending the setCurrentUser function from user.action.js to the App props
 const mapDispatchToProps = (dispatch) => {
   return {
     setCurrentUser: (user) => {
@@ -81,5 +96,4 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
-
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
