@@ -3,26 +3,25 @@ import "./App.css";
 import { HomePage } from "./pages/home_page/homepage.component";
 import ShopPage from "./pages/shop_page/shop.component";
 import { Route, Switch } from "react-router-dom";
-import { Header } from "./components/header/header.component";
+import Header from "./components/header/header.component";
 import { SignInAndSignUpPage } from "./pages/sign_in_and_sign_up_page/sign_in_and_sign_up_page.component";
+import { connect } from "react-redux";
+import { setCurrentUser } from "./redux/user/user.action";
 
 //we add auth to our application so that we can use it to let our application know that someone is authenticated using google
-import { auth, createUserProfileDocument } from "./assets/firebase/firebase.utils";
+import {
+  auth,
+  createUserProfileDocument,
+} from "./assets/firebase/firebase.utils";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentUser: null,
-    };
-  }
-
   //new method
   unsubscribeFromAuth = null;
 
   //this runs after the application is mounted(rendered)
   componentDidMount() {
+    const { setCurrentUser } = this.props;
+
     //this is an open subscription - Whenever a user signed in or signed out, the onAuthStateChanged method will give us a user, which we will add to our this.state/to our database
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       this.setState({ currentUser: userAuth }); //adding a user object to the state for conditional rendering
@@ -40,16 +39,14 @@ class App extends React.Component {
         // The documentSnapshot object allows us to check if a document exists at this query using the .exists property which returns a boolean.
         // We can also get the actual data of a user on the object by calling the .data() method, which returns us a JSON object with user data.
         userRef.onSnapshot((snapShot) => {
-          this.setState({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data(), //spreading the data of a user
-            },
+          setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data(), //spreading the data of a user
           });
         });
       } else {
         //if a userAuth object does not exist, we set the state to null
-        this.setState({ currentUser: null });
+        setCurrentUser({ userAuth });
       }
     });
   }
@@ -63,7 +60,7 @@ class App extends React.Component {
     return (
       <div className="App">
         {/* passing currentUser to conditionally render the sign out button */}
-        <Header currentUser={this.state.currentUser}></Header>
+        <Header></Header>
 
         {/* Switch component is imported from the react-router-component, it only renders the first path that it encounters in our code, it is useful to prevent multiple renders if there are components with the same path */}
         <Switch>
@@ -77,4 +74,12 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCurrentUser: (user) => {
+      return dispatch(setCurrentUser(user));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(App);

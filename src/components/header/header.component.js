@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import { auth } from "../../assets/firebase/firebase.utils"; //for sign out
-
 //ReactComponent as Logo is a special syntax for importing svg
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 import "./header.scss";
+import { connect } from "react-redux";
 
-export const Header = ({ currentUser }) => {
+const Header = ({ currentUser }) => {
   return (
     <div className="header">
       <Link className="logo_container" to="/">
@@ -38,3 +37,10 @@ export const Header = ({ currentUser }) => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => {
+  return { currentUser: state.user.currentUser };
+};
+
+//connect is a higher-order component, that lets us modify a component by taking a component as an argument and returning a new one
+export default connect(mapStateToProps)(Header);
