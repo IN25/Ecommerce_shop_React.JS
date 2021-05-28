@@ -1,0 +1,16 @@
+.cart_dropdown {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 7rem;
+  right: 5rem;
+  z-index: 5;
+  background: white;
+  border: 2px solid black;
+  width: 300px;
+  height: 450px;
+
+  .custom_button {
+    margin-top: 23rem;
+  }
+}

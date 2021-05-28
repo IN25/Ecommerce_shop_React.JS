@@ -6,8 +6,9 @@ import { ReactComponent as Logo } from "../../assets/crown.svg";
 import "./header.scss";
 import { connect } from "react-redux";
 import CartIcon from "../cart_icon/cart_icon.component";
+import CartDropdown from "../cart_dropdown/cart_dropdown.component";
 
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, hidden, toggleCartHidden }) => {
   return (
     <div className="header">
       <Link className="logo_container" to="/">
@@ -37,6 +38,8 @@ const Header = ({ currentUser }) => {
 
         <CartIcon></CartIcon>
       </div>
+
+      {hidden ? "" : <CartDropdown></CartDropdown>}
     </div>
   );
 };
@@ -45,7 +48,8 @@ const Header = ({ currentUser }) => {
 //we want to pass currentUser to Header from userReducer
 const mapStateToProps = (state) => {
   //currentUser is the value we want to pass as props and state.user.currentUser is the state value from root_reducer
-  return { currentUser: state.user.currentUser };
+  return { currentUser: state.user.currentUser, hidden: state.cart.hidden };
 };
+
 //by using connect(mapStateToProps), then mapStateToProps get access to the root_reducer, where all states are stored. Then we access user.currentUser state
 export default connect(mapStateToProps)(Header);
