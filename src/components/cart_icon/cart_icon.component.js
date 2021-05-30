@@ -3,6 +3,7 @@ import "./cart_icon.scss";
 import { ReactComponent as ShoppingIcon } from "../../assets/shopping-bag.svg";
 import { connect } from "react-redux";
 import { toggleCartHidden } from "../../redux/cart/cart.actions";
+import { selectCartItemsCount } from "../../redux/cart/cart.selectors";
 
 const CartIcon = ({ toggleCartHidden, itemCount }) => {
   return (
@@ -22,14 +23,12 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 //{ cart: { cartItems } } descturctures cartItems from the "state"
-const mapStateToProps = ({ cart: { cartItems } }) => {
-  //whenever any reducer updated, this gets re-rendered, this is bad for the performance and we do not want to re-render the component if cartItems are the same. So, we use memoization.
+const mapStateToProps = (state) => {
+  //whenever any reducer updates, this gets re-rendered, this is bad for the performance and we do not want to re-render the component if cartItems are the same. So, we use memoization.
 
   //accumulate all counters in cartItems state
   return {
-    itemCount: cartItems.reduce((accumulatedCounter, cartItem) => {
-      return (accumulatedCounter += cartItem.counter);
-    }, 0),
+    itemCount: selectCartItemsCount(state),
   };
 };
 
