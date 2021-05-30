@@ -1,0 +1,17 @@
+.cart_item {
+  width: 300px;
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 5.5rem;
+    height: 7rem;
+    margin: 1rem;
+  }
+
+  .product_info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.7rem;
+  }
+}

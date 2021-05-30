@@ -1,7 +1,10 @@
 .cart_dropdown {
-  display: flex;
-  justify-content: center;
+  overflow-y: auto; //make div scrolling vertically
+  overflow-x: hidden; //disable horizontal scrolling
+
   position: absolute;
+  display: flex;
+  flex-direction: column;
   top: 7rem;
   right: 5rem;
   z-index: 5;
@@ -10,7 +13,14 @@
   width: 300px;
   height: 450px;
 
-  .custom_button {
-    margin-top: 23rem;
+  .cart_items {
+    width: 500px;
+    height: 540px;
+    overflow: scroll;
+  }
+
+  .button {
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
   }
 }
