@@ -7,6 +7,7 @@ import Header from "./components/header/header.component";
 import { SignInAndSignUpPage } from "./pages/sign_in_and_sign_up_page/sign_in_and_sign_up_page.component";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.action";
+import CheckOutPage from "./pages/checkout_page/checkoutpage.component";
 
 //we add auth to our application so that we can use it to let our application know that someone is authenticated using google
 import {
@@ -77,6 +78,7 @@ class App extends React.Component {
             }
           />
           <Route path="/signin" component={SignInAndSignUpPage}></Route>
+          <Route exact path="/checkout" component={CheckOutPage}></Route>
         </Switch>
       </div>
     );
