@@ -5,7 +5,6 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
     return cartItem.id === cartItemToAdd.id;
   });
 
-  console.log(cartItems);
   if (existingItem) {
     return cartItems.map((cartItem) => {
       return cartItem.id === cartItemToAdd.id
@@ -15,4 +14,12 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
   } else {
     return [...cartItems, { ...cartItemToAdd, counter: 1 }];
   }
+};
+
+export const removeFromCart = (cartItems, cartItemToRemove) => {
+  const filtered = cartItems.filter((cartItem) => {
+    return cartItem.id !== cartItemToRemove.id;
+  });
+
+  return filtered;
 };

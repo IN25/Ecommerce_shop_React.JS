@@ -1,7 +1,7 @@
 import React from "react";
 import "./checkoutpage.scss";
 import { connect } from "react-redux";
-import { CheckOutItem } from "../../components/checkout_item/checkout_item.component";
+import CheckOutItem from "../../components/checkout_item/checkout_item.component";
 
 const CheckOutPage = ({ cartItems, total }) => {
   return (
@@ -32,7 +32,7 @@ const CheckOutPage = ({ cartItems, total }) => {
               );
             })
           ) : (
-            <span className='empty_cart'>Your cart is empty</span>
+            <span className="empty_cart">Your cart is empty</span>
           )}
         </div>
       </div>
@@ -45,7 +45,7 @@ const CheckOutPage = ({ cartItems, total }) => {
 const mapStateToProps = ({ cart: { cartItems } }) => {
   return {
     cartItems: cartItems,
-    
+
     total: cartItems.reduce((accumulator, cartItem) => {
       return (accumulator += cartItem.counter * cartItem.price);
     }, 0),
