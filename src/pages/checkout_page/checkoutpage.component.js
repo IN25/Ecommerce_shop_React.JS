@@ -22,13 +22,10 @@ const CheckOutPage = ({ cartItems, total }) => {
           {cartItems.length ? (
             cartItems.map((cartItem) => {
               return (
-                <>
-                  <CheckOutItem
-                    key={cartItem.id}
-                    cartItem={cartItem}
-                  ></CheckOutItem>
-                  <hr />
-                </>
+                <CheckOutItem
+                  key={cartItem.id}
+                  cartItem={cartItem}
+                ></CheckOutItem>
               );
             })
           ) : (
@@ -43,7 +40,6 @@ const CheckOutPage = ({ cartItems, total }) => {
 };
 
 const mapStateToProps = ({ cart: { cartItems } }) => {
-  console.log("total = ", cartItems);
   return {
     cartItems: cartItems,
 

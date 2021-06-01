@@ -9,40 +9,47 @@ import {
 
 const CheckOutItem = ({ cartItem, addItem, removeFromCart, decreaseItem }) => {
   return (
-    <div className="checkout_item">
-      <img className="item_info" src={cartItem.imageUrl} alt={cartItem.name} />
-      <span className="item_info">{cartItem.name} </span>
-      <div className="item_info">
+    <>
+      <div className="checkout_item">
+        <img
+          className="item_info"
+          src={cartItem.imageUrl}
+          alt={cartItem.name}
+        />
+        <span className="item_info">{cartItem.name} </span>
+        <div className="item_info">
+          <span
+            className="decrease"
+            onClick={() => {
+              decreaseItem(cartItem);
+            }}
+          >
+            &#10094;
+          </span>
+
+          {cartItem.counter}
+
+          <span
+            className="increase"
+            onClick={() => {
+              addItem(cartItem);
+            }}
+          >
+            &#10095;
+          </span>
+        </div>
+        <span className="item_info">${cartItem.price}</span>
         <span
-          className="decrease"
+          className="item_info"
           onClick={() => {
-            decreaseItem(cartItem);
+            removeFromCart(cartItem);
           }}
         >
-          &#10094;
-        </span>
-
-        {cartItem.counter}
-
-        <span
-          className="increase"
-          onClick={() => {
-            addItem(cartItem);
-          }}
-        >
-          &#10095;
+          &#10005;
         </span>
       </div>
-      <span className="item_info">${cartItem.price}</span>
-      <span
-        className="item_info"
-        onClick={() => {
-          removeFromCart(cartItem);
-        }}
-      >
-        &#10005;
-      </span>
-    </div>
+      <hr />
+    </>
   );
 };
 

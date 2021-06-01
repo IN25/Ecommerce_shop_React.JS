@@ -1,40 +1,20 @@
 import React from "react";
 import "./directory.scss";
 import MenuItem from "../../components/menu_item/menu_item.component";
-import { data } from "./directory.data";
+import { connect } from "react-redux";
 
-class Directory extends React.Component {
-  constructor() {
-    super();
+const Directory = ({ sections }) => {
+  return (
+    <div className="menu_directory">
+      {sections.map((section) => {
+        return <MenuItem key={section.id} {...section}></MenuItem>;
+      })}
+    </div>
+  );
+};
 
-    this.state = {
-      sections: data,
-    };
-  }
+const mapStateToProps = (state) => {
+  return { sections: state.data.sections };
+};
 
-  render() {
-    return (
-      <div className="menu_directory">
-        {this.state.sections.map((section) => {
-          return <MenuItem key={section.id} {...section}></MenuItem>;
-        })}
-      </div>
-    );
-  }
-}
-
-export default Directory;
-
-// export const Directory = () => {
-//   return (
-//     <>
-//       <div className="menu_directory">
-//         <MenuItem title={"HATS"}></MenuItem>
-//         <MenuItem title={"JACKETS"}></MenuItem>
-//         <MenuItem title={"SNEAKERS"}></MenuItem>
-//         <MenuItem title={"WOMENS"}></MenuItem>
-//         <MenuItem title={"MENS"}></MenuItem>
-//       </div>
-//     </>
-//   );
-// };
+export default connect(mapStateToProps)(Directory);
