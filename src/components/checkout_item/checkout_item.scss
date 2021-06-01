@@ -22,11 +22,20 @@
 
   .item_info:last-child {
     width: 10%;
+    cursor: pointer;
   }
 
   .item_info:nth-child(2) {
     width: 27%;
   }
 
+  .decrease {
+    cursor: pointer;
+    margin-right: 0.4rem;
+  }
 
+  .increase {
+    cursor: pointer;
+    margin-left: 0.4rem;
+  }
 }

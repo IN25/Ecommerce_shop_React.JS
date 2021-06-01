@@ -43,6 +43,7 @@ const CheckOutPage = ({ cartItems, total }) => {
 };
 
 const mapStateToProps = ({ cart: { cartItems } }) => {
+  console.log("total = ", cartItems);
   return {
     cartItems: cartItems,
 
