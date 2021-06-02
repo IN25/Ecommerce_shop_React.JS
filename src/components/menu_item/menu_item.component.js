@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import "./menu_item.scss";
 
 const MenuItem = ({ title, imageUrl, size, history, match }) => {
-  return (
+return (
     <>
       <div
         //in the directory.data.js we added a size property with the 'large' key. If the data has "size" property, it will be with the className of large menu_item

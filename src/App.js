@@ -63,6 +63,7 @@ class App extends React.Component {
         {/* Switch component is imported from the react-router-component, it only renders the first path that it encounters in our code, it is useful to prevent multiple renders if there are components with the same path */}
         <Switch>
           {/* Route component is imported from the react-router-dom, it allows us to render components based on a url path */}
+          {/*match, location and history props are passed automatically with the ShopPage component*/}
           <Route exact path="/" component={HomePage}></Route>
           <Route path="/shop" component={ShopPage}></Route>
           {/* this will redirect a user to the homepage if he is signed in */}
