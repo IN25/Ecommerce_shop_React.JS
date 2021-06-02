@@ -4,13 +4,13 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import "./menu_item.scss";
 
-const MenuItem = ({ title, imageUrl, size, history, match }) => {
-return (
+const MenuItem = ({ title, imageUrl, size, history, match, linkUrl }) => {
+  return (
     <>
       <div
         //in the directory.data.js we added a size property with the 'large' key. If the data has "size" property, it will be with the className of large menu_item
         className={`${size} menu_item`}
-        onClick={() => history.push(`${match.url}${title}`)} //  /someMatchedUrl/title
+        onClick={() => history.push(`${match.url}${linkUrl}`)} //  /someMatchedUrl/title
       >
         <div
           className="background-image"

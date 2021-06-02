@@ -6,22 +6,27 @@ import CollectionItem from "../../components/collection_item/collection_item.com
 
 const CollectionPage = ({ collection }) => {
   console.log(collection);
+  const { title, items } = collection;
   return (
     <div className="collection">
-      <h2>Collection Page</h2>
+      <h2 className="title">{title}</h2>
+
+      <div className="items">
+        {items.map((item) => {
+          return <CollectionItem key={item.id} item={item}></CollectionItem>;
+        })}
+      </div>
     </div>
   );
 };
 
 //ownProps is the second parameter of mapStateToProps that is the props of the CollectionPage component
 const mapStateToProps = (state, ownProps) => {
-  // console.log("state = ", state);
-  // console.log("ownProps = ", ownProps);
+  console.log("state = ", state);
+  console.log("ownProps = ", ownProps);
   return {
-    //here I match the url parameter with the id of collection to get the collection from the reducer based on url parameter
-    collection: state.collections.collectionsData.find((collection) => {
-      return collection.routeName === ownProps.match.params.collectionId;
-    }),
+    //here I pass the neccessary collection key of the object from the collections.reducer.js, for example if the url parameter is hats, we pass collections[hats]
+    collection: state.collections[ownProps.match.params.collectionId],
   };
 };
 
