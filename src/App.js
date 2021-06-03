@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
-import { HomePage } from "./pages/home_page/homepage.component";
+import { HomePage } from "./pages/home_page/homepage.component.jsx";
 import ShopPage from "./pages/shop_page/shop.component";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Header from "./components/header/header.component";
+import Header from "./components/header/header.component.jsx";
 import { SignInAndSignUpPage } from "./pages/sign_in_and_sign_up_page/sign_in_and_sign_up_page.component";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.action";

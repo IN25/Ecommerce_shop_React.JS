@@ -1,46 +1,47 @@
 import React from "react";
+
+import {
+  HeaderContainer,
+  LogoContainer,
+  OptionsContainer,
+  OptionLink,
+} from "./header.styles";
+
 import { Link } from "react-router-dom";
 import { auth } from "../../assets/firebase/firebase.utils"; //for sign out
 //ReactComponent as Logo is a special syntax for importing svg
 import { ReactComponent as Logo } from "../../assets/crown.svg";
-import "./header.scss";
 import { connect } from "react-redux";
-import CartIcon from "../cart_icon/cart_icon.component";
+import CartIcon from "../cart_icon/cart_icon.component.jsx";
 import CartDropdown from "../cart_dropdown/cart_dropdown.component";
 
 const Header = ({ currentUser, hidden }) => {
   return (
-    <div className="header">
-      <Link className="logo_container" to="/">
+    <HeaderContainer>
+      <LogoContainer to="/">
         <Logo className="logo"></Logo>
-      </Link>
+      </LogoContainer>
 
-      <div className="options">
-        <Link className="option" to="/shop">
-          SHOP
-        </Link>
+      <OptionsContainer>
+        <OptionLink to="/shop">SHOP</OptionLink>
 
-        <Link className="option" to="/shop">
-          CONTACT
-        </Link>
+        <OptionLink to="/shop">CONTACT</OptionLink>
 
         {/* passing "curentUser" form App.js to let the header know whether the user signed in or not for condiitonal rendering */}
         {currentUser ? (
           // auth.signOut() signs out a user from firebase
-          <Link className="option" onClick={() => auth.signOut()} to="">
+          <OptionLink onClick={() => auth.signOut()} to="">
             SIGN OUT
-          </Link>
+          </OptionLink>
         ) : (
-          <Link className="option" to="/signin">
-            SIGN IN
-          </Link>
+          <OptionLink to="/signin">SIGN IN</OptionLink>
         )}
 
         <CartIcon></CartIcon>
-      </div>
+      </OptionsContainer>
 
       {hidden ? "" : <CartDropdown></CartDropdown>}
-    </div>
+    </HeaderContainer>
   );
 };
 
