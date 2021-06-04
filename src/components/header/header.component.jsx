@@ -7,7 +7,6 @@ import {
   OptionLink,
 } from "./header.styles";
 
-import { Link } from "react-router-dom";
 import { auth } from "../../assets/firebase/firebase.utils"; //for sign out
 //ReactComponent as Logo is a special syntax for importing svg
 import { ReactComponent as Logo } from "../../assets/crown.svg";

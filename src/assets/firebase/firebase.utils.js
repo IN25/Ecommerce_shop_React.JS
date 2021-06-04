@@ -19,7 +19,6 @@ firebase.initializeApp(config);
 //this function allows us to take an object of the authenticated user that we get from the auth library and store its' properties inside the Firestore databa se
 //user is the object of the authenticated user that we get from the auth library
 export const createUserProfileDocument = async (userAuth, additionalData) => {
-
   //if a user is not authenticated, return form this function
   if (!userAuth) return;
 
@@ -67,6 +66,22 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   //we might want userRef object to use it for something else
   return userRef;
+};
+
+//this utility is for adding the shop data to the Firebase
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = firestore.collection(collectionKey);
+
+  //this batch is needed to send data as a chunk rather than piece by piece (in case internet connection is down) to prevent unpredictable behaviour
+  const batch = firestore.batch();
+  objectsToAdd.forEach((obj) => {
+    const newDocRef = collectionRef.doc(); //generates new doc reference in this collection and generates an id
+    batch.set(newDocRef, obj);
+  });
+  return await batch.commit(); //fires off our batch request, also returns a promise
 };
 
 //configurations for google authentication

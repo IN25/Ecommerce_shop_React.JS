@@ -13,6 +13,7 @@ import CheckOutPage from "./pages/checkout_page/checkoutpage.component";
 import {
   auth,
   createUserProfileDocument,
+  addCollectionAndDocuments,
 } from "./assets/firebase/firebase.utils";
 
 class App extends React.Component {
@@ -21,7 +22,13 @@ class App extends React.Component {
 
   //this runs after the application is mounted(rendered)
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    const { setCurrentUser, collections } = this.props;
+
+    //from the collections array we do not need the id, because firebase generates a unique one for us, that is why grab collections data with only  title and item properties
+    const collectionsArrayForFirebase = collections.map(({ title, items }) => ({
+      title,
+      items,
+    }));
 
     //this is an open subscription - Whenever a user signed in or signed out, the onAuthStateChanged method will give us a user, which we will add to our this.state/to our database
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
@@ -46,6 +53,8 @@ class App extends React.Component {
         //if a userAuth object does not exist, we set the state to null
         setCurrentUser(userAuth);
       }
+
+      addCollectionAndDocuments("collections", collectionsArrayForFirebase);
     });
   }
 
@@ -88,7 +97,12 @@ class App extends React.Component {
 
 //passing currentUser into the App props
 const mapStateToProps = (state) => {
-  return { currentUser: state.user.currentUser };
+  return {
+    currentUser: state.user.currentUser,
+    collections: Object.keys(state.collections).map(
+      (key) => state.collections[key]
+    ),
+  };
 };
 
 //sending the setCurrentUser function from user.action.js to the App props
