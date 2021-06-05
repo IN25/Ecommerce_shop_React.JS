@@ -6,9 +6,9 @@ import { PreviewCollection } from "../preview_collection/collection_preview.comp
 
 const CollectionsOverview = ({ collections }) => {
   //because the collections state is object, we cannot map thorough it, so we have to iterate thorough keys and put them into an array
-  const collectionArray = Object.keys(collections).map(
-    (key) => collections[key]
-  );
+  const collectionArray = collections
+    ? Object.keys(collections).map((key) => collections[key])
+    : [];
 
   return (
     <div className="collections_overview">
@@ -25,8 +25,7 @@ const CollectionsOverview = ({ collections }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log("state = ", state);
-  return { collections: state.collections };
+  return { collections: state.collections.collection };
 };
 
 export default connect(mapStateToProps)(CollectionsOverview);

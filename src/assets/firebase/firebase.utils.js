@@ -84,6 +84,25 @@ export const addCollectionAndDocuments = async (
   return await batch.commit(); //fires off our batch request, also returns a promise
 };
 
+export const convertCollectionsSnapshotToMap = (collectionsSnapshot) => {
+  const transformedCollection = collectionsSnapshot.docs.map((doc) => {
+    const { title, items } = doc.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()), //encodeURI - A value representing an encoded URI. Encodes a text string as a valid Uniform Resource Identifier (URI)
+      id: doc.id,
+      title,
+      items,
+    };
+  });
+
+  return transformedCollection.reduce((accumulator, collection) => {
+    //here we set so that the title is the key of an object and collection is a value
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
+};
+
 //configurations for google authentication
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
