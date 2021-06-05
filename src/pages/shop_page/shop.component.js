@@ -2,45 +2,26 @@ import React from "react";
 import { Route } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { updateCollections } from "../../redux/collections/collections.actions";
+import { fetchCollectionsStartAsync } from "../../redux/collections/collections.actions";
 
 import CollectionsOverview from "../../components/collections_overview/collections_overview.component";
 import CollectionPage from "../collection_page/collection_page.component.jsx";
 import withSpinner from "../../components/with_spinner/with_spinner.component";
 
-import {
-  firestore,
-  convertCollectionsSnapshotToMap,
-} from "../../assets/firebase/firebase.utils";
-
 const CollectionsOverviewWithSpinner = withSpinner(CollectionsOverview);
 const CollectionPageWithSpinner = withSpinner(CollectionPage);
 
 class ShopPage extends React.Component {
-  //we can declare our state without a constructor, super gets called under the hood
-  state = {
-    isLoading: true,
-  };
-
   unsubscribeFromSnapshot = null;
 
   //getting shop data from firebase
   componentDidMount() {
-    const { updateCollections } = this.props;
-    const collectionRef = firestore.collection("collections");
-
-    //collectionRef.onSnapshot() means whenever the collectionRef updates or is run for the first time, this will send us a snapshot object of our collection
-    collectionRef.onSnapshot(async (snapshot) => {
-      //we call convertCollectionsSnapshotToMap to add id and routeName to the collections object. We didn't add these properties to Firestore because for example the mobile app does not need a routeName and Firesotre generates the id automatically
-      const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-      updateCollections(collectionsMap);
-      this.setState({ isLoading: false });
-    });
+    const { fetchCollectionsStartAsync } = this.props;
+    fetchCollectionsStartAsync();
   }
 
   render() {
-    const { match } = this.props;
-    const { isLoading } = this.state;
+    const { match, isCollectionFetching, isCollectionsLoaded } = this.props;
 
     return (
       <div className="shop-page">
@@ -54,7 +35,10 @@ class ShopPage extends React.Component {
           path={`${match.path}`}
           //render takes a function with a parameter of the properties that a component will receive
           render={(props) => (
-            <CollectionsOverviewWithSpinner isLoading={isLoading} {...props} />
+            <CollectionsOverviewWithSpinner
+              isLoading={isCollectionFetching}
+              {...props}
+            />
           )}
         ></Route>
 
@@ -63,7 +47,10 @@ class ShopPage extends React.Component {
           // /:collectionId. /: gives us an access to the parameters in match object
           path={`${match.path}/:collectionId`}
           render={(props) => (
-            <CollectionPageWithSpinner isLoading={isLoading} {...props} />
+            <CollectionPageWithSpinner
+              isLoading={!isCollectionsLoaded}
+              {...props}
+            />
           )}
         ></Route>
       </div>
@@ -71,12 +58,17 @@ class ShopPage extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    updateCollections: (collectionsMap) => {
-      dispatch(updateCollections(collectionsMap));
-    },
+    isCollectionFetching: state.collections.isFetching,
+    isCollectionsLoaded: !!state.collections.collection, //!!convert a value to boolean one
   };
 };
 
-export default connect(null, mapDispatchToProps)(ShopPage);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);

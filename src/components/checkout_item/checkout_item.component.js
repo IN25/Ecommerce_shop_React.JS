@@ -1,6 +1,7 @@
 import React from "react";
 import "./checkout_item.scss";
 import { connect } from "react-redux";
+
 import {
   addItem,
   removeFromCart,
@@ -48,7 +49,6 @@ const CheckOutItem = ({ cartItem, addItem, removeFromCart, decreaseItem }) => {
           &#10005;
         </span>
       </div>
-      <hr />
     </>
   );
 };
