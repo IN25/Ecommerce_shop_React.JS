@@ -22,7 +22,6 @@ const CollectionPage = ({ collection }) => {
 
 //ownProps is the second parameter of mapStateToProps that is the props of the CollectionPage component
 const mapStateToProps = (state, ownProps) => {
-  console.log("state = ", state);
   return {
     //here I pass the neccessary collection key of the object from the collections.reducer.js, for example if the url parameter is hats, we pass collections[hats]
     collection: state.collections.collection

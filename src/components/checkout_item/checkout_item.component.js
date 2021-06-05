@@ -49,6 +49,7 @@ const CheckOutItem = ({ cartItem, addItem, removeFromCart, decreaseItem }) => {
           &#10005;
         </span>
       </div>
+      <hr />
     </>
   );
 };

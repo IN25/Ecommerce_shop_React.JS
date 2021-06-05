@@ -4,12 +4,8 @@ import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchCollectionsStartAsync } from "../../redux/collections/collections.actions";
 
-import CollectionsOverview from "../../components/collections_overview/collections_overview.component";
-import CollectionPage from "../collection_page/collection_page.component.jsx";
-import withSpinner from "../../components/with_spinner/with_spinner.component";
-
-const CollectionsOverviewWithSpinner = withSpinner(CollectionsOverview);
-const CollectionPageWithSpinner = withSpinner(CollectionPage);
+import CollectionsOverviewContainer from "../../components/collections_overview/collections_overview.container";
+import CollectionPageContainer from "../collection_page/collection_page.container";
 
 class ShopPage extends React.Component {
   unsubscribeFromSnapshot = null;
@@ -21,7 +17,7 @@ class ShopPage extends React.Component {
   }
 
   render() {
-    const { match, isCollectionFetching, isCollectionsLoaded } = this.props;
+    const { match } = this.props;
 
     return (
       <div className="shop-page">
@@ -34,36 +30,19 @@ class ShopPage extends React.Component {
           //${match.path} is the current path of this ShopPage - /shop. We do not hardcode it to make this component reusable.
           path={`${match.path}`}
           //render takes a function with a parameter of the properties that a component will receive
-          render={(props) => (
-            <CollectionsOverviewWithSpinner
-              isLoading={isCollectionFetching}
-              {...props}
-            />
-          )}
+          component={CollectionsOverviewContainer}
         ></Route>
 
         <Route
           exact
           // /:collectionId. /: gives us an access to the parameters in match object
           path={`${match.path}/:collectionId`}
-          render={(props) => (
-            <CollectionPageWithSpinner
-              isLoading={!isCollectionsLoaded}
-              {...props}
-            />
-          )}
+          component={CollectionPageContainer}
         ></Route>
       </div>
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    isCollectionFetching: state.collections.isFetching,
-    isCollectionsLoaded: !!state.collections.collection, //!!convert a value to boolean one
-  };
-};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -71,4 +50,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);
+export default connect(null, mapDispatchToProps)(ShopPage);
