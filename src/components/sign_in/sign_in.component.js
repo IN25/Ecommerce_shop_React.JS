@@ -1,8 +1,11 @@
 import React from "react";
 import "./sign_in.scss";
+import { connect } from "react-redux";
+
 import { FormInput } from "../../components/form_input/form_input.component";
 import { CustomButton } from "../../components/custom_button/custom_button.component";
 import { auth, signInWithGoogle } from "../../assets/firebase/firebase.utils";
+import { googleSignInStart } from "../../redux/user/user.actions";
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -34,6 +37,8 @@ class SignIn extends React.Component {
   };
 
   render() {
+    const { googleSignInStart } = this.props;
+
     return (
       <div className="sign_in">
         <h2 className="title">I already have an account </h2>
@@ -64,10 +69,10 @@ class SignIn extends React.Component {
             </CustomButton>
 
             <CustomButton
-              //because this CustomButton is inside the form tag, this button's type is set as submit by default, changin it for button will not longer warn to fill the form
+              //because this CustomButton is inside the form tag, this button's type is set as submit by default, changing it for button will not longer warn to fill the form
               type="button"
               value="SIGN IN WITH GOOGLE"
-              onClick={signInWithGoogle}
+              onClick={googleSignInStart}
               isGoogleSignIn
             ></CustomButton>
           </div>
@@ -77,4 +82,10 @@ class SignIn extends React.Component {
   }
 }
 
-export default SignIn;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    googleSignInStart: () => dispatch(googleSignInStart()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SignIn);

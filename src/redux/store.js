@@ -2,6 +2,7 @@ import { createStore, applyMiddleware } from "redux";
 import { persistStore } from "redux-persist"; //allows a browser to cash(perserve) the store
 import createSagaMiddleware from "redux-saga";
 import { fetchCollectionsStart } from "./collections/collections.sagas";
+import rootSaga from "./root_saga";
 
 //We need to add Middleware to our store so that whenever an action gets fired or dispatched we can catch and display them, it is helpful for debugging our redux, it catches the actions and console.logs them
 //Middleware are functions that take actions in, do something with them and pass them into the Root Reducer
@@ -22,6 +23,6 @@ if (process.env.NODE_ENV === "development") {
 export const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
 //this is where sagas get runned
-sagaMiddleware.run(fetchCollectionsStart);
+sagaMiddleware.run(rootSaga);
 
 export const persistor = persistStore(store); //persostor version of the store
