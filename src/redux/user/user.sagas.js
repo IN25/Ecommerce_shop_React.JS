@@ -1,4 +1,9 @@
-import { takeLatest, all, call, put } from "@redux-saga/core/effects";
+import {
+  takeLatest,
+  all,
+  call,
+  put,
+} from "@redux-saga/core/effects";
 import { UserActionTypes } from "./user.types";
 
 import {
@@ -7,7 +12,12 @@ import {
   createUserProfileDocument,
 } from "../../assets/firebase/firebase.utils";
 
-import { googleSignInFailure, googleSignInSuccess } from "./user.actions";
+import {
+  emailSignInFailure,
+  emailSignInSuccess,
+  googleSignInFailure,
+  googleSignInSuccess,
+} from "./user.actions";
 
 export function* onGoogleSignInStart() {
   yield takeLatest(UserActionTypes.GOOGLE_SIGN_IN_START, signInWithGoogle);
@@ -36,7 +46,30 @@ export function* signInWithGoogle() {
   }
 }
 
+export function* onEmailSignInStart() {
+  yield takeLatest(UserActionTypes.EMAIL_SIGN_IN_START, signInWithEmail);
+}
+
+// by passing signInWithEmail into the takeLatest, we get an entire EMAIL_SIGN_IN_START actionChannel, and we want to destructure payload values from it.
+//destructure email, password that have been passed as an object via emailSignInStart function
+export function* signInWithEmail({ payload: { email, password } }) {
+  try {
+    const { user } = yield auth.signInWithEmailAndPassword(email, password); //
+    const userRef = yield call(createUserProfileDocument, user); //calling createUserProfileDocument(user), createUserProfileDocument returns userRef, and we will use userRef below for getting a snapshot
+
+    const userSnapshot = yield userRef.get();
+    yield put(
+      emailSignInSuccess({
+        id: userSnapshot.id,
+        ...userSnapshot.data(),
+      })
+    );
+  } catch (error) {
+    yield put(emailSignInFailure(error));
+  }
+}
+
 //exporting all the userSasgas we wrote in this file to pass into root_saga.js
 export function* userSagas() {
-  yield all([call(onGoogleSignInStart)]);
+  yield all([call(onGoogleSignInStart), call(onEmailSignInStart)]);
 }

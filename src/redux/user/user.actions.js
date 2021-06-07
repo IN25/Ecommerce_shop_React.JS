@@ -28,10 +28,10 @@ export const googleSignInFailure = (error) => {
   };
 };
 
-export const emailSignInStart = (emailAndPasdword) => {
+export const emailSignInStart = (emailAndPassword) => {
   return {
     type: UserActionTypes.EMAIL_SIGN_IN_START,
-    payload: emailAndPasdword,
+    payload: emailAndPassword, //gets an object with the email and password properties
   };
 };
 
