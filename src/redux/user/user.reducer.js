@@ -8,8 +8,7 @@ const INITIAL_STATE = {
 //if state is undefined, it will take the default parameter - "INITIAL_STATE"
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case UserActionTypes.GOOGLE_SIGN_IN_SUCCESS:
-    case UserActionTypes.EMAIL_SIGN_IN_SUCCESS:
+    case UserActionTypes.SIGN_IN_SUCCESS:
       return {
         ...state, //leave any other state values as they are
         currentUser: action.payload, //and only modify currentUser
