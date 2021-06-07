@@ -9,7 +9,7 @@ import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 
 ReactDOM.render(
-  //provider is a parent component of everything. It gives our application access to stores and reducers
+  //provider is a parent component of everything. It gives our application access to the store
   <Provider store={store}>
     <BrowserRouter>
       {/* PersistGate allows our app to maintain the state after a refresh */}

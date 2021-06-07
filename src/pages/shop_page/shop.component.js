@@ -2,7 +2,7 @@ import React from "react";
 import { Route } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { fetchCollectionsStartAsync } from "../../redux/collections/collections.actions";
+import { fetchCollectionsStart } from "../../redux/collections/collections.actions";
 
 import CollectionsOverviewContainer from "../../components/collections_overview/collections_overview.container";
 import CollectionPageContainer from "../collection_page/collection_page.container";
@@ -12,8 +12,8 @@ class ShopPage extends React.Component {
 
   //getting shop data from firebase
   componentDidMount() {
-    const { fetchCollectionsStartAsync } = this.props;
-    fetchCollectionsStartAsync();
+    const { fetchCollectionsStart } = this.props;
+    fetchCollectionsStart();
   }
 
   render() {
@@ -46,7 +46,7 @@ class ShopPage extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync()),
+    fetchCollectionsStart: () => dispatch(fetchCollectionsStart()),
   };
 };
 
