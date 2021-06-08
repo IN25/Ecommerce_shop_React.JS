@@ -89,7 +89,7 @@ export function* isUserAuthenticated() {
   }
 }
 
-export function* onSignOut() {
+export function* onSignOutStart() {
   yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
 }
 
@@ -103,7 +103,7 @@ export function* signOut() {
   }
 }
 
-export function* onSignUp() {
+export function* onSignUpStart() {
   yield takeLatest(UserActionTypes.SIGN_UP_START, signUp);
 }
 
@@ -113,16 +113,16 @@ export function* signUp(props) {
     payload: { password, displayName, email },
   } = props;
 
-  // auth.createUserWithEmailAndPassword(this.email, this.password)
-  // Creates a new user account associated with the specified email address and password and returns a userAuth object
-  // On successful creation of the user account, this user will also be signed in to your application.
-  // User account creation can fail if the account already exists or the password is invalid.
-  const { user } = yield auth.createUserWithEmailAndPassword(email, password);
-
-  yield createUserProfileDocument(user, { displayName });
-  yield put(signUpSuccess());
-  yield put(signInSuccess(user));
   try {
+    // auth.createUserWithEmailAndPassword(this.email, this.password)
+    // Creates a new user account associated with the specified email address and password and returns a userAuth object
+    // On successful creation of the user account, this user will also be signed in to your application.
+    // User account creation can fail if the account already exists or the password is invalid.
+    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+
+    yield createUserProfileDocument(user, { displayName });
+    yield put(signUpSuccess());
+    yield put(signInSuccess(user));
   } catch (error) {
     yield put(signUpFailure(error));
   }
@@ -134,7 +134,7 @@ export function* userSagas() {
     call(onGoogleSignInStart),
     call(onEmailSignInStart),
     call(onCheckUserSession),
-    call(onSignOut),
-    call(onSignUp),
+    call(onSignOutStart),
+    call(onSignUpStart),
   ]);
 }
