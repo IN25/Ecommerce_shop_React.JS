@@ -66,3 +66,23 @@ export const signOutFailure = (error) => {
     payload: error,
   };
 };
+
+export const signUpStart = (emailAndPasswordAndDisplayName) => {
+  return {
+    type: UserActionTypes.SIGN_UP_START,
+    payload: emailAndPasswordAndDisplayName,
+  };
+};
+
+export const signUpSuccess = () => {
+  return {
+    type: UserActionTypes.SIGN_UP_SUCCESS,
+  };
+};
+
+export const signUpFailure = (error) => {
+  return {
+    type: UserActionTypes.SIGN_UP_FAILURE,
+    payload: error,
+  };
+};

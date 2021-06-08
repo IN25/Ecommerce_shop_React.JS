@@ -14,6 +14,8 @@ import {
   signInSuccess,
   signOutFailure,
   signOutSuccess,
+  signUpFailure,
+  signUpSuccess,
 } from "./user.actions";
 import { clearCart } from "../cart/cart.actions";
 
@@ -101,6 +103,31 @@ export function* signOut() {
   }
 }
 
+export function* onSignUp() {
+  yield takeLatest(UserActionTypes.SIGN_UP_START, signUp);
+}
+
+export function* signUp(props) {
+  //desctucturing the object that was passed into signUpStart and came as a payload from the SIGN_UP_START action
+  const {
+    payload: { password, displayName, email },
+  } = props;
+
+  // auth.createUserWithEmailAndPassword(this.email, this.password)
+  // Creates a new user account associated with the specified email address and password and returns a userAuth object
+  // On successful creation of the user account, this user will also be signed in to your application.
+  // User account creation can fail if the account already exists or the password is invalid.
+  const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+
+  yield createUserProfileDocument(user, { displayName });
+  yield put(signUpSuccess());
+  yield put(signInSuccess(user));
+  try {
+  } catch (error) {
+    yield put(signUpFailure(error));
+  }
+}
+
 //exporting all the userSasgas we wrote in this file to pass into root_saga.js
 export function* userSagas() {
   yield all([
@@ -108,5 +135,6 @@ export function* userSagas() {
     call(onEmailSignInStart),
     call(onCheckUserSession),
     call(onSignOut),
+    call(onSignUp),
   ]);
 }
