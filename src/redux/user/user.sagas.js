@@ -15,6 +15,7 @@ import {
   signOutFailure,
   signOutSuccess,
 } from "./user.actions";
+import { clearCart } from "../cart/cart.actions";
 
 function* getSnapShotFromUserAuth(userAuth, additionalData) {
   const userRef = yield call(
@@ -94,6 +95,7 @@ export function* signOut() {
   try {
     auth.signOut();
     yield put(signOutSuccess());
+    yield put(clearCart());
   } catch (error) {
     yield put(signOutFailure(error));
   }

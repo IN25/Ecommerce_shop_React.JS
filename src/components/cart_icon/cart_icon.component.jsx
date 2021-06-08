@@ -25,9 +25,11 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = ({ cart: { cartItems } }) => {
   //accumulate all counters in cartItems state
   return {
-    itemCount: cartItems.reduce((accumulatedCounter, cartItem) => {
-      return (accumulatedCounter += cartItem.counter);
-    }, 0),
+    itemCount: cartItems
+      ? cartItems.reduce((accumulatedCounter, cartItem) => {
+          return (accumulatedCounter += cartItem.counter);
+        }, 0)
+      : 0,
   };
 };
 
