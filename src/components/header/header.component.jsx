@@ -7,14 +7,14 @@ import {
   OptionLink,
 } from "./header.styles";
 
-import { auth } from "../../assets/firebase/firebase.utils"; //for sign out
 //ReactComponent as Logo is a special syntax for importing svg
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 import { connect } from "react-redux";
 import CartIcon from "../cart_icon/cart_icon.component.jsx";
 import CartDropdown from "../cart_dropdown/cart_dropdown.component";
+import { signOutStart } from "../../redux/user/user.actions";
 
-const Header = ({ currentUser, hidden }) => {
+const Header = ({ currentUser, hidden, signOutStart }) => {
   return (
     <HeaderContainer>
       <LogoContainer to="/">
@@ -29,7 +29,7 @@ const Header = ({ currentUser, hidden }) => {
         {/* passing "curentUser" form App.js to let the header know whether the user signed in or not for condiitonal rendering */}
         {currentUser ? (
           // auth.signOut() signs out a user from firebase
-          <OptionLink onClick={() => auth.signOut()} to="">
+          <OptionLink onClick={signOutStart} to="">
             SIGN OUT
           </OptionLink>
         ) : (
@@ -51,5 +51,9 @@ const mapStateToProps = (state) => {
   return { currentUser: state.user.currentUser, hidden: state.cart.hidden };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return { signOutStart: () => dispatch(signOutStart()) };
+};
+
 //by using connect(mapStateToProps), then mapStateToProps get access to the root_reducer, where all states are stored. Then we access user.currentUser state
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

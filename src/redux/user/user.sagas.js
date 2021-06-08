@@ -12,6 +12,8 @@ import {
   emailSignInFailure,
   googleSignInFailure,
   signInSuccess,
+  signOutFailure,
+  signOutSuccess,
 } from "./user.actions";
 
 function* getSnapShotFromUserAuth(userAuth, additionalData) {
@@ -84,11 +86,25 @@ export function* isUserAuthenticated() {
   }
 }
 
+export function* onSignOut() {
+  yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
+}
+
+export function* signOut() {
+  try {
+    auth.signOut();
+    yield put(signOutSuccess());
+  } catch (error) {
+    yield put(signOutFailure(error));
+  }
+}
+
 //exporting all the userSasgas we wrote in this file to pass into root_saga.js
 export function* userSagas() {
   yield all([
     call(onGoogleSignInStart),
     call(onEmailSignInStart),
     call(onCheckUserSession),
+    call(onSignOut),
   ]);
 }

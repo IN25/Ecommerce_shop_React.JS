@@ -17,9 +17,17 @@ const userReducer = (state = INITIAL_STATE, action) => {
 
     case UserActionTypes.GOOGLE_SIGN_IN_FAILURE:
     case UserActionTypes.EMAIL_SIGN_IN_FAILURE:
+    case UserActionTypes.SIGN_OUT_FAILURE:
       return {
         ...state,
         error: action.payload,
+      };
+
+    case UserActionTypes.SIGN_OUT_SUCCESS:
+      return {
+        ...state,
+        currentUser: null,
+        error: null,
       };
     //Every reducer gets action that gets fired, even if those actions are not related to this reducer. If none of the action types match inside our switch statement we just return state
     default:
