@@ -19,3 +19,13 @@
 .form {
   margin-top: 1rem;
 }
+
+@media screen and (max-width: 800px) {
+  .sign_in {
+    width: 90%;
+  }
+
+  .form .button {
+    width: 8rem;
+  }
+}

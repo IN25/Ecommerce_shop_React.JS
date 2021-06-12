@@ -53,12 +53,13 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
         />
 
         <div className="buttons">
-          <CustomButton value="SIGN IN" type="submit">
+          <CustomButton className="button" value="SIGN IN" type="submit">
             Sign in
           </CustomButton>
 
           <CustomButton
             //because this CustomButton is inside the form tag, this button's type is set as submit by default, changing it for button will not longer warn to fill the form
+            className="button"
             type="button"
             value="SIGN IN WITH GOOGLE"
             onClick={googleSignInStart}

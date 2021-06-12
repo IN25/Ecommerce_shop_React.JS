@@ -45,20 +45,21 @@
 @media screen and (max-width: 800px) {
   .item {
     width: 100%;
-    height: 15rem;
+    height: 18rem;
 
     .product_info {
       font-size: 1rem;
     }
 
     .custom_button {
-      top: 9.5rem;
+      top: 12rem;
+      left: 1.5rem;
       display: block;
       opacity: unset;
       min-width: unset;
+      justify-content: center;
       padding: 0 10px;
     }
-
 
     &:hover {
       img {

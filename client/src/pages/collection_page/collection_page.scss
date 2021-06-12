@@ -3,7 +3,6 @@
   flex-direction: column;
   margin: 0 4.5rem;
 
-
   .title {
     text-align: center;
     font-size: 2rem;
@@ -14,5 +13,24 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 3rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .collection {
+    width: 100%;
+    margin: 0;
+
+    .items {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 1rem;
+      margin: 0 1rem;
+      margin-bottom: 4rem;
+    }
+
+    .title {
+      margin-bottom: 0;
+    }
   }
 }

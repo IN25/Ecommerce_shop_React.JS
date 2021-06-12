@@ -28,3 +28,9 @@
     margin-bottom: 1.5rem;
   }
 }
+
+@media screen and (max-width: 800px) {
+  .cart_dropdown {
+    right: 2.5rem;
+  }
+}

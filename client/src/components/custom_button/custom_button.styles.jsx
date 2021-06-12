@@ -39,6 +39,7 @@ export const CustomButtonContainer = styled.button`
   margin-top: 1rem;
   letter-spacing: 0.5px;
   cursor: pointer;
+  border-radius: 0.5rem;
 
   display: flex;
   justify-content: center;

@@ -7,7 +7,9 @@ import StripeCheckoutButton from "../../components/stripe_button/stripe_button.c
 const CheckOutPage = ({ cartItems, total }) => {
   return (
     <div className="checkout_page">
-      <div className="title">checkout page</div>
+      <div className="title">
+        <h1>Checkout Page</h1>
+      </div>
 
       <div className="info">
         <div className="table">
@@ -15,7 +17,7 @@ const CheckOutPage = ({ cartItems, total }) => {
           <span className="table_title">Description</span>
           <span className="table_title">Quantity</span>
           <span className="table_title">Price</span>
-          <span className="table_title">Remove</span>
+          <span className="table_title">Delete</span>
         </div>
         <hr />
 

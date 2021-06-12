@@ -7,6 +7,9 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   margin-top: 3rem;
   margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+
+  
 `;
 
 export const LogoContainer = styled(Link)`
@@ -26,6 +29,7 @@ export const OptionsContainer = styled.div`
 
   @media screen and (max-width: 800px) {
     margin-right: 1.5rem;
+    gap: 1rem;
   }
 `;
 

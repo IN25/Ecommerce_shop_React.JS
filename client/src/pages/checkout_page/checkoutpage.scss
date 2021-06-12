@@ -2,9 +2,7 @@
   width: 100%;
 
   .title {
-    text-transform: uppercase;
     margin-left: 5.2rem;
-    font-size: 1.1rem;
   }
 
   .info {
@@ -13,7 +11,6 @@
 
     .table {
       display: flex;
-      justify-content: space-between;
       width: 100%;
       font-size: 1.2rem;
 
@@ -62,6 +59,29 @@
       display: flex;
       justify-content: flex-end;
       margin: 3rem 0;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .checkout_page {
+    font-size: 0.9rem;
+    width: 100%;
+
+    .info {
+      width: 95%;
+    }
+
+    .title {
+      margin-left: 1.5rem;
+    }
+
+    .total {
+      justify-content: center;
+    }
+
+    .payment .button {
+      justify-content: center;
     }
   }
 }
