@@ -1,0 +1,29 @@
+.collection_preview {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+.title_collection_preview {
+  margin-left: 5.2rem;
+  margin-bottom: 0rem;
+}
+
+@media screen and (max-width: 800px) {
+  .collection_preview_container {
+    margin: 0 1rem;
+
+    .title_collection_preview{
+      margin: 0;
+      text-align: center;
+    }
+  }
+
+  .collection_preview {
+    display: grid;
+    gap: 1rem;
+    align-items: start;
+    grid-template-columns: 1fr 1fr;
+  }
+}

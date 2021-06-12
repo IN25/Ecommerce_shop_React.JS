@@ -1,0 +1,10 @@
+.collections_title {
+  margin-left: 5.2rem;
+  margin-bottom: 1.8rem;
+}
+
+@media screen and (max-width: 800px) {
+  .shop-page .collections_title {
+    margin-left: 1.5rem;
+  }
+}

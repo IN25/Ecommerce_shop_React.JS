@@ -1,0 +1,21 @@
+.sign_in {
+  margin: 2rem 0;
+  width: 400px;
+
+  span {
+    font-size: 1.1rem;
+  }
+
+  .title {
+    margin: 2rem 0;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.form {
+  margin-top: 1rem;
+}
