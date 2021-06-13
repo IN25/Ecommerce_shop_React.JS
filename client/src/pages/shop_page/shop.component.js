@@ -1,12 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import "./shop.styles.scss";
 import { Route } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { fetchCollectionsStart } from "../../redux/collections/collections.actions";
+import Spinner from "../../components/spinner/spinner.component";
 
-import CollectionsOverviewContainer from "../../components/collections_overview/collections_overview.container";
-import CollectionPageContainer from "../collection_page/collection_page.container";
+const CollectionsOverviewContainer = lazy(() =>
+  import("../../components/collections_overview/collections_overview.container")
+);
+const CollectionPageContainer = lazy(() =>
+  import("../collection_page/collection_page.container")
+);
 
 const ShopPage = ({ fetchCollectionsStart, match }) => {
   //getting shop data from firebase
@@ -17,21 +22,22 @@ const ShopPage = ({ fetchCollectionsStart, match }) => {
   return (
     <div className="shop-page">
       <h1 class="collections_title">Collections</h1>
+      <Suspense fallback={<Spinner />}>
+        <Route
+          exact
+          //${match.path} is the current path of this ShopPage - /shop. We do not hardcode it to make this component reusable.
+          path={`${match.path}`}
+          //render takes a function with a parameter of the properties that a component will receive
+          component={CollectionsOverviewContainer}
+        ></Route>
 
-      <Route
-        exact
-        //${match.path} is the current path of this ShopPage - /shop. We do not hardcode it to make this component reusable.
-        path={`${match.path}`}
-        //render takes a function with a parameter of the properties that a component will receive
-        component={CollectionsOverviewContainer}
-      ></Route>
-
-      <Route
-        exact
-        // /:collectionId. /: gives us an access to the parameters in match object
-        path={`${match.path}/:collectionId`}
-        component={CollectionPageContainer}
-      ></Route>
+        <Route
+          exact
+          // /:collectionId. /: gives us an access to the parameters in match object
+          path={`${match.path}/:collectionId`}
+          component={CollectionPageContainer}
+        ></Route>
+      </Suspense>
     </div>
   );
 };
