@@ -4,12 +4,14 @@
 const express = require("express"); //importing experss library
 const bodyParser = require("body-parser");
 const path = require("path");
+const compression = require("compression");
 
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 console.log("process.env.STRIPE_SECRET_KEY = ", process.env.STRIPE_SECRET_KEY);
 
+app.use(compression()); //when we deploy a website, this makes sure that chuncks of files are compressed, for optimization purposes
 const app = express(); //instantiate a new express application
 const port = process.env.PORT || 5000; //if there is a PORT value in process.env set by Heroku, use that port, otherwise use localhost:5000
 
