@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true })); //urlencoded makes sure stri
 //serve the client application
 //if we are in production:
 if (process.env.NODE_ENV === "production") {
+  app.use(enforce.HTTPS({ trustProtoHeader: true })); //makes sure our code doesn't require us to use https in development.
   app.use(express.static(path.join(__dirname, "client/build")));
 
   //send the static files
@@ -33,6 +34,10 @@ app.listen(port, (error) => {
   if (error) throw error;
   console.log("Server running on port " + port);
 });
+
+// app.get("/service-worker.js", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "..", "build", "service-worker.js"));
+// });
 
 //building payment route
 app.post("/payment", (req, res) => {
