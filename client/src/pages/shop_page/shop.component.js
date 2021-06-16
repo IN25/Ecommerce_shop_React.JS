@@ -21,7 +21,7 @@ const ShopPage = ({ fetchCollectionsStart, match }) => {
 
   return (
     <div className="shop-page">
-      <h1 class="collections_title">Collections</h1>
+      <h1 className="collections_title">Collections</h1>
       <Suspense fallback={<Spinner />}>
         <Route
           exact

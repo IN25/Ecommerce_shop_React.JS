@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { toggleCartHidden } from "../../redux/cart/cart.actions";
 
 const CartIcon = ({ toggleCartHidden, itemCount }) => {
-  console.log("itemCount = ", itemCount);
   return (
     <div className="cart_icon" onClick={toggleCartHidden}>
       <ShoppingIcon className="shopping_icon"></ShoppingIcon>

@@ -33,4 +33,15 @@ export const clearCart = () => {
   };
 };
 
+export const createUserCart = () => {
+  return {
+    type: CartActionTypes.CREATE_USER_CART,
+  };
+};
 
+export const setCart = (cartItems) => {
+  return {
+    type: CartActionTypes.SET_CART_FROM_FIREBASE,
+    payload: cartItems,
+  };
+};

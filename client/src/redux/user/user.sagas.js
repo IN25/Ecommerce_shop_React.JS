@@ -17,6 +17,7 @@ import {
   signUpFailure,
   signUpSuccess,
 } from "./user.actions";
+
 import { clearCart } from "../cart/cart.actions";
 
 function* getSnapShotFromUserAuth(userAuth, additionalData) {

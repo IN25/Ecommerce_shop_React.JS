@@ -68,6 +68,22 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+export const getUserCartRef = async (userId) => {
+  const cartsColRef = firestore
+    .collection("cartItems")
+    .where("userId", "==", userId);
+
+  const snapShot = await cartsColRef.get();
+
+  if (snapShot.empty) {
+    const cartDocRef = firestore.collection("cartItems").doc();
+    await cartDocRef.set({ userId, cartItems: [] });
+    return cartDocRef;
+  } else {
+    return snapShot.docs[0].ref;
+  }
+};
+
 //this utility is for adding the shop data to the Firebase
 export const addCollectionAndDocuments = async (
   collectionKey,
@@ -105,7 +121,7 @@ export const convertCollectionsSnapshotToMap = (collectionsSnapshot) => {
 
 export const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
-    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
       unsubscribe();
       resolve(userAuth);
     }, reject);

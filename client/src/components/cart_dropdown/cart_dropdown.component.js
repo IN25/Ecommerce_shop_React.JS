@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import { toggleCartHidden } from "../../redux/cart/cart.actions";
 
 const CartDropdown = ({ cartItems, toggleCartHidden }) => {
-  console.log("cartItems = ", cartItems);
   return (
     <div className="cart_dropdown">
       <div className="cart_items">

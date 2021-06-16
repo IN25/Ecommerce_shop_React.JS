@@ -3,9 +3,12 @@ import "./collection_item.scss";
 import { CustomButton } from "../custom_button/custom_button.component";
 import { connect } from "react-redux";
 import { addItem } from "../../redux/cart/cart.actions";
+import { checkUserSession } from "../../redux/user/user.actions";
 
-const CollectionItem = ({ item, addItem }) => {
+const CollectionItem = ({ item, addItem, checkUserSession }) => {
   const { name, imageUrl, price } = item;
+  checkUserSession();
+
   return (
     <div className="item">
       <img src={imageUrl} alt="" />
@@ -28,6 +31,7 @@ const CollectionItem = ({ item, addItem }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   addItem: (item) => dispatch(addItem(item)),
+  checkUserSession: () => dispatch(checkUserSession()),
 });
 
 export default connect(null, mapDispatchToProps)(CollectionItem);
